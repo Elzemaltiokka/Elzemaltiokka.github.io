@@ -94,7 +94,7 @@ const FILES = [
     ],
     body: `
       <p>Manisa Celal Bayar Üniversitesi Bilgisayar Programcılığı öğrencisiyim. Yazılım tarafında beni en çok içine çeken şey, ekranın arkasında dönen sistem mantığı; verinin nasıl tutulduğu, bir talebin hangi adımlardan geçip güvenli bir sonuca ulaştığı.</p>
-      <p>C#, Java ve PHP ile geliştirme yapıyor; veritabanı mimarisi ve siber güvenlik alanlarında kendimi derinleştiriyorum. Bir projede hem arka plan kurgusunu oluşturmak hem de tasarım gözüyle detaylara dokunmak üretme biçimimin en sevdiğim parçası.</p>
+      <p>C#, Java ve PHP ile geliştirme yapıyor; veritabanı mimarisi ve siber güvenlik alanlarında kendimi geliştiriyorum. Bir projede hem arka plan kurgusunu oluşturmak hem de tasarım gözüyle detaylara dokunmak üretme biçimimin en sevdiğim parçası.</p>
       <p>Bu dosyada üzerinde çalıştığım projeleri, tamamladığım eğitimleri ve kullandığım araçları bir araya getirdim. Dosyaları karıştırmaktan çekinme.</p>
     `,
     excerpt: {
