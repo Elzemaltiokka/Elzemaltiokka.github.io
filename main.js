@@ -142,7 +142,7 @@ const FILES = [
         <ul class="dash">
           <li>Oturum &amp; rol kontrolü</li>
           <li>CSRF &amp; giriş güvenliği</li>
-          <li>Kullanıcı &amp; teknisyen panelleri</li>
+          <li>Kullanıcı, teknisyen &amp; yönetici panelleri</li>
           <li>Arka yüz &amp; veri bağlantısı</li>
         </ul>`,
     },
@@ -386,33 +386,72 @@ function renderFile(f) {
 // kâğıtları sürükleme (sadece masaüstü)
 let topZ = 10;
 const canDrag = window.matchMedia("(min-width: 821px)");
+const PAD = 8;
+
+// kayma miktarını ekranın içinde kalacak şekilde sınırlıyor
+function clampShift(rect, dx, dy) {
+  const fit = (d, min, max) => Math.min(Math.max(d, Math.min(min, max)), Math.max(min, max));
+  return [
+    fit(dx, PAD - rect.left, view.clientWidth - PAD - rect.right),
+    fit(dy, PAD - rect.top, window.innerHeight - PAD - rect.bottom),
+  ];
+}
+
+function getShift(el) {
+  // tarayıcı "100px 0px" değerini "100px" diye kısaltabiliyor
+  const [x = 0, y = 0] = (el.style.translate || "").split(" ").map((v) => parseFloat(v) || 0);
+  return [x, y];
+}
 
 view.addEventListener("pointerdown", (e) => {
   if (!canDrag.matches || e.button !== 0) return;
   const el = e.target.closest("[data-drag]");
   if (!el || e.target.closest("a, button, pre")) return;
 
-  const [tx, ty] = (el.style.translate || "0px 0px").split(" ").map((v) => parseFloat(v) || 0);
-  const sx = e.clientX, sy = e.clientY;
+  const [tx, ty] = getShift(el);
+  const rect = el.getBoundingClientRect();
+  const sx = e.clientX, sy = e.clientY, st = view.scrollTop;
   let moved = false;
 
   const move = (ev) => {
-    const dx = ev.clientX - sx, dy = ev.clientY - sy;
+    let dx = ev.clientX - sx, dy = ev.clientY - sy;
     if (!moved && Math.hypot(dx, dy) < 4) return;
     if (!moved) {
       moved = true;
       el.classList.add("dragging");
       el.style.zIndex = ++topZ;
     }
+    // sürüklerken sayfa kaydırılırsa diye
+    const scrolled = view.scrollTop - st;
+    const r = { left: rect.left, right: rect.right, top: rect.top - scrolled, bottom: rect.bottom - scrolled };
+    [dx, dy] = clampShift(r, dx, dy + scrolled);
     el.style.translate = `${tx + dx}px ${ty + dy}px`;
   };
   const up = () => {
     el.classList.remove("dragging");
-    window.removeEventListener("pointermove", move);
-    window.removeEventListener("pointerup", up);
+    el.removeEventListener("pointermove", move);
+    el.removeEventListener("pointerup", up);
+    el.removeEventListener("pointercancel", up);
+    el.removeEventListener("lostpointercapture", up);
   };
-  window.addEventListener("pointermove", move);
-  window.addEventListener("pointerup", up);
+  // fare pencerenin dışında bırakılsa bile sürükleme bitsin
+  el.setPointerCapture(e.pointerId);
+  el.addEventListener("pointermove", move);
+  el.addEventListener("pointerup", up);
+  el.addEventListener("pointercancel", up);
+  el.addEventListener("lostpointercapture", up);
+});
+
+// pencere küçülünce yana taşan kâğıtları geri çek
+window.addEventListener("resize", () => {
+  if (view.hidden) return;
+  view.querySelectorAll("[data-drag]").forEach((el) => {
+    if (!el.style.translate) return;
+    const [tx, ty] = getShift(el);
+    const r = el.getBoundingClientRect();
+    const [dx] = clampShift(r, 0, 0);
+    if (dx) el.style.translate = `${tx + dx}px ${ty}px`;
+  });
 });
 
 // kod kutuya sığsın diye yazıyı küçültüyor
