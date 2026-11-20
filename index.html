@@ -10,6 +10,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/logo.png">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // yenileyince renk ve ana sayfa göz kırpmasın
+    (function () {
+      var r = document.documentElement, m = "main";
+      try { m = localStorage.getItem("mode") === "pink" ? "pink" : "main"; } catch (e) {}
+      r.dataset.mode = m;
+      r.classList.add("boot");
+      if (location.hash.length > 1) r.classList.add("boot-file");
+    })();
+  </script>
 </head>
 <body>
 

@@ -1,67 +1,7 @@
-// renk modları (main / pink)
-const THEMES = {
-  main: {
-    label: "Main",
-    vars: {
-      "--bg": "#68002C",        // beet red
-      "--fg": "#FFF3F2",        // snow
-      "--muted": "#E9B8C9",
-      "--line": "rgba(255,243,242,.18)",
-      "--paper": "#FFF3F2",     // snow
-      "--paper-ink": "#3E2723",
-      "--excerpt": "#D9EAFE",   // icy blue
-      "--receipt": "#FFF8D5",   // lemon icing
-      "--stamp": "#BA006D",     // berry
-      "--code-bg": "#3E2723",
-      "--code-fg": "#FFF3F2",
-      "--mark": "rgba(186,0,109,.18)",
-    },
-    // klasör rengi, yazı rengi
-    files: {
-      kimlik: ["#BA006D", "#FFF3F2"], // berry
-      "teknik-servis": ["#A6C9DD", "#3E2723"], // crystal blue
-      "gider-takip": ["#FFF8D5", "#3E2723"], // lemon icing
-      sertifikalar: ["#D9EAFE", "#3E2723"], // icy blue
-      beceriler: ["#89235B", "#FFF3F2"], // raspberry
-      iletisim: ["#3E2723", "#FFF3F2"], // deep espresso
-    },
-  },
-  pink: {
-    label: "Pink",
-    vars: {
-      "--bg": "#FFE4EE",
-      "--fg": "#4A0F2E",
-      "--muted": "#A0577A",
-      "--line": "rgba(74,15,46,.14)",
-      "--paper": "#FFF6F9",
-      "--paper-ink": "#4A0F2E",
-      "--excerpt": "#FFC2D6",
-      "--receipt": "#FFE0CC",
-      "--stamp": "#D81B60",
-      "--code-bg": "#4A0F2E",
-      "--code-fg": "#FFE4EE",
-      "--mark": "rgba(216,27,96,.2)",
-    },
-    files: {
-      kimlik: ["#D81B60", "#FFF6F9"],
-      "teknik-servis": ["#FF8FB8", "#4A0F2E"],
-      "gider-takip": ["#9C1C5B", "#FFF6F9"],
-      sertifikalar: ["#FF5C93", "#FFF6F9"],
-      beceriler: ["#5E0F38", "#FFE4EE"],
-      iletisim: ["#FFB3CF", "#4A0F2E"],
-    },
-  },
-};
-
+// renk modu (renkler style.css'te)
 function applyTheme(name) {
-  const t = THEMES[name] || THEMES.main;
-  const root = document.documentElement;
-  Object.entries(t.vars).forEach(([k, v]) => root.style.setProperty(k, v));
-  Object.entries(t.files).forEach(([id, [c, ink]]) => {
-    root.style.setProperty(`--f-${id}`, c);
-    root.style.setProperty(`--i-${id}`, ink);
-  });
-  root.dataset.mode = name;
+  if (name !== "pink") name = "main";
+  document.documentElement.dataset.mode = name;
   document.querySelectorAll(".mode button").forEach((b) =>
     b.setAttribute("aria-pressed", String(b.dataset.mode === name))
   );
@@ -499,9 +439,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !view.hidden) location.hash = "";
 });
 
-let saved = "main";
-try { saved = localStorage.getItem("mode") || "main"; } catch (e) {}
-applyTheme(saved);
+applyTheme(document.documentElement.dataset.mode);
 document.querySelectorAll(".mode button").forEach((b) =>
   b.addEventListener("click", () => applyTheme(b.dataset.mode))
 );
@@ -509,3 +447,7 @@ document.querySelectorAll(".mode button").forEach((b) =>
 renderCabinet();
 window.addEventListener("hashchange", route);
 route();
+// ilk açılışta animasyon oynamasın, sonra normale dönsün
+requestAnimationFrame(() => requestAnimationFrame(() =>
+  document.documentElement.classList.remove("boot", "boot-file")
+));

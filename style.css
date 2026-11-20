@@ -1,18 +1,48 @@
 /* genel */
-:root {
-  /* main mod, js modlara göre değiştiriyor */
-  --bg: #68002C;
-  --fg: #FFF3F2;
+:root,
+[data-mode="main"] {
+  /* main mod */
+  --bg: #68002C;              /* beet red */
+  --fg: #FFF3F2;              /* snow */
   --muted: #E9B8C9;
   --line: rgba(255,243,242,.18);
   --paper: #FFF3F2;
   --paper-ink: #3E2723;
-  --excerpt: #D9EAFE;
-  --receipt: #FFF8D5;
-  --stamp: #BA006D;
+  --excerpt: #D9EAFE;         /* icy blue */
+  --receipt: #FFF8D5;         /* lemon icing */
+  --stamp: #BA006D;           /* berry */
   --code-bg: #3E2723;
   --code-fg: #FFF3F2;
   --mark: rgba(186,0,109,.18);
+  /* klasörler: renk / yazı */
+  --f-kimlik: #BA006D;        --i-kimlik: #FFF3F2;
+  --f-teknik-servis: #A6C9DD; --i-teknik-servis: #3E2723;
+  --f-gider-takip: #FFF8D5;   --i-gider-takip: #3E2723;
+  --f-sertifikalar: #D9EAFE;  --i-sertifikalar: #3E2723;
+  --f-beceriler: #89235B;     --i-beceriler: #FFF3F2;
+  --f-iletisim: #3E2723;      --i-iletisim: #FFF3F2;
+}
+[data-mode="pink"] {
+  --bg: #FFE4EE;
+  --fg: #4A0F2E;
+  --muted: #A0577A;
+  --line: rgba(74,15,46,.14);
+  --paper: #FFF6F9;
+  --paper-ink: #4A0F2E;
+  --excerpt: #FFC2D6;
+  --receipt: #FFE0CC;
+  --stamp: #D81B60;
+  --code-bg: #4A0F2E;
+  --code-fg: #FFE4EE;
+  --mark: rgba(216,27,96,.2);
+  --f-kimlik: #D81B60;        --i-kimlik: #FFF6F9;
+  --f-teknik-servis: #FF8FB8; --i-teknik-servis: #4A0F2E;
+  --f-gider-takip: #9C1C5B;   --i-gider-takip: #FFF6F9;
+  --f-sertifikalar: #FF5C93;  --i-sertifikalar: #FFF6F9;
+  --f-beceriler: #5E0F38;     --i-beceriler: #FFE4EE;
+  --f-iletisim: #FFB3CF;      --i-iletisim: #4A0F2E;
+}
+:root {
   --serif: "Instrument Serif", Georgia, serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --sans: "Inter", system-ui, sans-serif;
@@ -589,3 +619,7 @@ h1 {
 @media (max-width: 600px) {
   .peek-clip { left: calc(var(--x) * .55 + 170px); width: 58px; top: calc(var(--tab-h) - 25px); }
 }
+
+/* sayfa yenilenince ana sayfa bir an görünmesin, animasyonlar oynamasın */
+.boot-file #home, .boot-file .nav, .boot-file .foot { visibility: hidden; }
+.boot *, .boot *::before, .boot *::after { animation: none !important; transition: none !important; }
