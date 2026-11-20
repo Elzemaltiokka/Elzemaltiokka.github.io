@@ -388,12 +388,17 @@ let topZ = 10;
 const canDrag = window.matchMedia("(min-width: 821px)");
 const PAD = 8;
 
-// kayma miktarını ekranın içinde kalacak şekilde sınırlıyor
-function clampShift(rect, dx, dy) {
+// kâğıtlar klasörün dışına çıkmasın, aşağı kaçıp kaybolmasın
+function clampShift(el, rect, dx, dy) {
+  const desk = el.closest(".desk").getBoundingClientRect();
+  const left = Math.max(desk.left, 0) + PAD;
+  const right = Math.min(desk.right, view.clientWidth) - PAD;
+  const top = desk.top + PAD;
+  const bottom = desk.bottom - PAD;
   const fit = (d, min, max) => Math.min(Math.max(d, Math.min(min, max)), Math.max(min, max));
   return [
-    fit(dx, PAD - rect.left, view.clientWidth - PAD - rect.right),
-    fit(dy, PAD - rect.top, window.innerHeight - PAD - rect.bottom),
+    fit(dx, left - rect.left, right - rect.right),
+    fit(dy, top - rect.top, bottom - rect.bottom),
   ];
 }
 
@@ -407,6 +412,7 @@ view.addEventListener("pointerdown", (e) => {
   if (!canDrag.matches || e.button !== 0) return;
   const el = e.target.closest("[data-drag]");
   if (!el || e.target.closest("a, button, pre")) return;
+  e.preventDefault(); // sürüklerken yazılar seçilmesin
 
   const [tx, ty] = getShift(el);
   const rect = el.getBoundingClientRect();
@@ -424,7 +430,7 @@ view.addEventListener("pointerdown", (e) => {
     // sürüklerken sayfa kaydırılırsa diye
     const scrolled = view.scrollTop - st;
     const r = { left: rect.left, right: rect.right, top: rect.top - scrolled, bottom: rect.bottom - scrolled };
-    [dx, dy] = clampShift(r, dx, dy + scrolled);
+    [dx, dy] = clampShift(el, r, dx, dy + scrolled);
     el.style.translate = `${tx + dx}px ${ty + dy}px`;
   };
   const up = () => {
@@ -449,7 +455,7 @@ window.addEventListener("resize", () => {
     if (!el.style.translate) return;
     const [tx, ty] = getShift(el);
     const r = el.getBoundingClientRect();
-    const [dx] = clampShift(r, 0, 0);
+    const [dx] = clampShift(el, r, 0, 0);
     if (dx) el.style.translate = `${tx + dx}px ${ty}px`;
   });
 });
