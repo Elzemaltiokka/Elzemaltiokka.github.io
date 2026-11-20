@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elzem Altıokka — Portfolyo</title>
+  <meta name="description" content="Elzem Altıokka — Yazılım geliştirici adayı. Projeler, sertifikalar ve iletişim.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="nav">
+    <nav class="nav-left">
+      <a href="#">Arşiv</a>
+      <a href="#teknik-servis">Projeler</a>
+      <a href="#iletisim">İletişim</a>
+    </nav>
+    <a class="logo" href="#" aria-label="Ana sayfa"><img class="logo-dark" src="assets/logo.png" alt="EA"><img class="logo-light" src="assets/logo-light.png" alt=""></a>
+    <nav class="nav-right">
+      <div class="mode" role="group" aria-label="Renk modu">
+        <button type="button" data-mode="main" aria-pressed="true">Main</button>
+        <button type="button" data-mode="pink" aria-pressed="false">Pink</button>
+      </div>
+      <a href="https://github.com/Elzemaltiokka" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/elzem-alt%C4%B1okka-9023353a2/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </header>
+
+  <!-- ana sayfa -->
+  <main id="home" class="home">
+    <p class="crumb">Portfolyo / Dosyalar 00–05</p>
+    <h1>Elzem Altıokka</h1>
+    <p class="lede">Yazılım geliştirici adayı · Bilgisayar Programcılığı öğrencisi</p>
+
+    <div id="cabinet" class="cabinet" aria-label="Dosyalar"></div>
+
+    <p class="hint">Bir klasör seç ve içine bak.</p>
+  </main>
+
+  <!-- açılan dosya -->
+  <section id="file" class="file-view" hidden></section>
+
+  <footer class="foot">© 2026 Elzem Altıokka</footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
