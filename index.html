@@ -9,15 +9,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/logo.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=7">
+  <style>
+    /* yenileyince ana sayfa bir an görünmesin (style.css'e bağlı kalmasın diye burada) */
+    .boot-file #home, .boot-file .nav, .boot-file .foot { visibility: hidden; }
+  </style>
   <script>
     // yenileyince renk ve ana sayfa göz kırpmasın
     (function () {
       var r = document.documentElement, m = "main";
       try { m = localStorage.getItem("mode") === "pink" ? "pink" : "main"; } catch (e) {}
       r.dataset.mode = m;
-      r.classList.add("boot");
-      if (location.hash.length > 1) r.classList.add("boot-file");
+      r.className = location.hash.length > 1 ? "boot boot-file" : "boot";
+      // main.js bir sebeple yüklenemezse sayfa boş kalmasın
+      setTimeout(function () { r.classList.remove("boot", "boot-file"); }, 3000);
     })();
   </script>
 </head>
@@ -56,6 +61,6 @@
 
   <footer class="foot">© 2026 Elzem Altıokka</footer>
 
-  <script src="main.js"></script>
+  <script src="main.js?v=7"></script>
 </body>
 </html>

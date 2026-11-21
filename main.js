@@ -325,7 +325,8 @@ function renderFile(f) {
 
 // kâğıtları sürükleme (sadece masaüstü)
 let topZ = 10;
-const canDrag = window.matchMedia("(min-width: 821px)");
+// dokunmatik ekranda sürükleme kapalı, yoksa sayfa kaydırılamıyor
+const canDrag = window.matchMedia("(min-width: 821px) and (hover: hover) and (pointer: fine)");
 const PAD = 8;
 
 // kâğıtlar klasörün dışına çıkmasın, aşağı kaçıp kaybolmasın
@@ -388,11 +389,12 @@ view.addEventListener("pointerdown", (e) => {
   el.addEventListener("lostpointercapture", up);
 });
 
-// pencere küçülünce yana taşan kâğıtları geri çek
+// pencere küçülünce yana taşan kâğıtları geri çek, mobil düzene geçince yerlerine koy
 window.addEventListener("resize", () => {
   if (view.hidden) return;
   view.querySelectorAll("[data-drag]").forEach((el) => {
     if (!el.style.translate) return;
+    if (!canDrag.matches) { el.style.translate = ""; return; }
     const [tx, ty] = getShift(el);
     const r = el.getBoundingClientRect();
     const [dx] = clampShift(el, r, 0, 0);
@@ -414,6 +416,8 @@ function fitCode() {
   });
 }
 window.addEventListener("resize", () => { if (!view.hidden) fitCode(); });
+// yazı tipi geç yüklenirse tekrar ölç
+if (document.fonts) document.fonts.ready.then(() => { if (!view.hidden) fitCode(); });
 
 // sayfa geçişleri
 function route() {
