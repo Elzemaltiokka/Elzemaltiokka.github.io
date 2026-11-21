@@ -1,6 +1,6 @@
 /* genel */
 :root,
-[data-mode="main"] {
+html[data-mode="main"] {
   /* main mod */
   --bg: #68002C;              /* beet red */
   --fg: #FFF3F2;              /* snow */
@@ -21,7 +21,7 @@
   --f-beceriler: #89235B;     --i-beceriler: #FFF3F2;
   --f-iletisim: #3E2723;      --i-iletisim: #FFF3F2;
 }
-[data-mode="pink"] {
+html[data-mode="pink"] {
   --bg: #FFE4EE;
   --fg: #4A0F2E;
   --muted: #A0577A;
@@ -71,8 +71,8 @@ a { color: inherit; }
 .nav-right { justify-content: flex-end; }
 .logo img { display: block; width: 46px; height: auto; transform: rotate(-8deg); }
 .logo .logo-light { display: none; }
-[data-mode="main"] .logo .logo-light { display: block; }
-[data-mode="main"] .logo .logo-dark { display: none; }
+html[data-mode="main"] .logo .logo-light { display: block; }
+html[data-mode="main"] .logo .logo-dark { display: none; }
 
 /* mod butonu */
 .nav-right { align-items: center; }
@@ -611,3 +611,58 @@ h1 {
 
 /* sol sekme dar ekranda kenara yapışmasın */
 @media (min-width: 821px) { .file-view { padding-left: max(56px, 4vw); } }
+
+/* telefon */
+@media (max-width: 600px) {
+  /* ana sayfa */
+  .home { padding-top: 34px; }
+  .lede { margin: 12px 0 44px; line-height: 1.5; }
+  .folder { --tab-h: 40px; }
+  .tab { font-size: 17px; padding: 2px 20px 0; }
+  .folder:last-child .band { min-height: 120px; }
+  .hint { margin-top: 22px; }
+
+  /* dosya sayfası */
+  .file-view { padding: 18px 12px 60px; }
+  .back { font-size: 14px; padding: 10px 0; margin-bottom: 2px; }
+  .desk { padding: 12px; }
+  .paper {
+    padding: 34px 18px 84px 34px;
+    background-image: radial-gradient(circle at 16px 50%, var(--c) 4.5px, transparent 5px);
+    background-size: 100% 64px;
+  }
+  .paper h2 { font-size: 32px; margin: 22px 0 22px; }
+  .ink-stamp { top: 40px; right: 12px; width: 72px; height: 72px; }
+  .ink-stamp + h2 { margin-top: 88px; }
+  .meta { padding: 12px 0; margin-bottom: 24px; }
+  .body { font-size: 17px; line-height: 1.6; }
+  .body p { margin-bottom: 18px; }
+  .seal { width: 52px; bottom: 18px; right: 18px; }
+
+  /* kimlik kartı ortada, klips sekmeye değmesin */
+  .id-card { justify-self: center; width: 88%; margin: -13px auto 22px; }
+  .id-card .klips { left: 72%; }
+
+  /* not ve fiş */
+  .excerpt, .desk.has-receipt .excerpt, .desk.has-card .excerpt { margin: -14px 6px 0; padding: 34px 22px 80px; }
+  .excerpt h3 { font-size: 30px; margin-bottom: 18px; }
+  .dash { font-size: 19px; }
+  .receipt, .desk.has-card .receipt { margin: -8px auto 6px; }
+
+  /* kod kutusu kâğıdın kenarına kadar */
+  .code { margin-left: -22px; margin-right: -8px; }
+  .code-label { margin-left: -22px !important; }
+
+  /* sertifikalar */
+  .slips { gap: 18px; margin-top: 22px; }
+  .slip { padding: 16px 16px 16px; }
+
+  /* iletişim: e-posta bölünmesin */
+  .contact li { grid-template-columns: 1fr; gap: 2px; padding: 12px 0; }
+  .contact a { font-size: 19px; word-break: normal; overflow-wrap: anywhere; }
+
+  /* diğer dosyalar: iki sütun */
+  .side-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px; }
+  .side-tabs a { text-align: center; padding: 11px 8px; font-size: 15px; }
+  .side-tabs a:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
