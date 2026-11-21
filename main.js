@@ -216,7 +216,7 @@ const FILES = [
     heading: "İletişime geçmek için",
     meta: [],
     body: `
-      <p>Bir proje, staj ya da iş fırsatı için bana yazabilirsin.</p>
+      <p>Bir proje, staj ya da iş fırsatı için bana yazabilirsiniz.</p>
       <ul class="contact">
         <li><span>E-posta</span><a href="mailto:elzemaltiokka44@gmail.com">elzemaltiokka44@gmail.com</a></li>
         <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/elzem-alt%C4%B1okka-9023353a2/" target="_blank" rel="noopener">elzem-altıokka</a></li>
