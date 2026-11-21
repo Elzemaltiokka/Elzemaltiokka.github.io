@@ -26,7 +26,7 @@ const FILES = [
     tab: "Kimlik Dosyası",
     x: "0%",
     peek: ["Hakkımda", "Bilgisayar Programcılığı · İstanbul"],
-    card: "assets/kimlik-karti.webp",
+    card: "assets/kimlik-karti-2.webp",
     heading: "Merhaba, ben Elzem.",
     meta: [
       ["Şehir", "İstanbul"],
